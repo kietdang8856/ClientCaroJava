@@ -96,7 +96,7 @@ public class LoginForm extends javax.swing.JFrame implements inReceiveMessage{
             }
         });
 
-        txtIP.setText("192.168.1.29");
+        txtIP.setText("192.168.1.27");
 
         jLabel2.setText("Address Ip");
 

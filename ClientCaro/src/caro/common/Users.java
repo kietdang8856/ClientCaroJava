@@ -12,33 +12,33 @@ import java.io.Serializable;
  * @author kietdang
  */
 public class Users implements Serializable{
-    private int Id;
+ private int Id;
     private String username;
     private String password;
     private int win;
+    private int lose;
+    private int score;
+    private boolean blocked; // Added blocked field
 
-    public Users(int Id, String username, String password, int win, int lose, int score) {
+    public Users(int Id, String username, String password, int win, int lose, int score, boolean blocked) {
         this.Id = Id;
         this.username = username;
         this.password = password;
         this.win = win;
         this.lose = lose;
         this.score = score;
+        this.blocked = blocked; // Initialize blocked field
     }
-    private int lose;
 
     public Users(String username, String password) {
         this.username = username;
         this.password = password;
     }
-    private int score;
     
     public Users()
     {
     
     }
-    
-  
     
     public int getId()
     {
@@ -64,6 +64,10 @@ public class Users implements Serializable{
     {
         return score;
     }
+    public boolean getBlocked() // Getter for blocked field
+    {
+        return blocked;
+    }
     public void setId(int id)
     {
         this.Id = id;
@@ -87,5 +91,9 @@ public class Users implements Serializable{
     public void setScore(int score)
     {
         this.score = score;
+    }
+    public void setBlocked(boolean blocked) // Setter for blocked field
+    {
+        this.blocked = blocked;
     }
 }

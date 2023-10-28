@@ -36,6 +36,7 @@ class ListenServer extends Thread {
             objectOutputStream = new ObjectOutputStream(outputStream);
             inputStream = socket.getInputStream();
             objectInputStream = new ObjectInputStream(inputStream);
+            this.user = user; // Truyền thông tin người dùng cho class ListenServer
 
         }
 
@@ -66,5 +67,13 @@ class ListenServer extends Thread {
             objectOutputStream.reset();
             objectOutputStream.writeObject(msg);
         }
+            public KMessage ReceiveMessage() throws IOException, ClassNotFoundException {
+        Object o = objectInputStream.readObject();
+        if (o != null) {
+            return (KMessage) o;
+        }
+        return null;
+    }
+            
     }
     

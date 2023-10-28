@@ -5,6 +5,7 @@
 package caro.client;
 
 import caro.common.KMessage;
+import caro.common.Users;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -15,18 +16,20 @@ import javax.swing.JOptionPane;
  *
  * @author kietdang
  */
-public class RoomFrame extends javax.swing.JFrame implements inReceiveMessage{
+public class RoomFrame extends javax.swing.JFrame implements inReceiveMessage {
+
     ListenServer listenServer;
+
     /**
      * Creates new form RoomFrame
      */
     public RoomFrame(ListenServer listenServer) {
         initComponents();
-        
+
         setLocationRelativeTo(null);
         this.listenServer = listenServer;
         this.listenServer.receive = this;
-        
+
         try {
             listenServer.SendMessage(21, null);
         } catch (IOException ex) {
@@ -47,8 +50,13 @@ public class RoomFrame extends javax.swing.JFrame implements inReceiveMessage{
         btnJoinRoom = new javax.swing.JButton();
         lstRoom = new java.awt.List();
         btnViewRoom = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAutoRequestFocus(false);
+        setBackground(new java.awt.Color(153, 255, 255));
 
         jButton1.setText("Refesh");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -56,36 +64,78 @@ public class RoomFrame extends javax.swing.JFrame implements inReceiveMessage{
                 jButton1MouseClicked(evt);
             }
         });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        btnJoinRoom.setText("Join Room");
+        btnJoinRoom.setText("Vào Phòng");
         btnJoinRoom.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnJoinRoomMouseClicked(evt);
             }
         });
+        btnJoinRoom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnJoinRoomActionPerformed(evt);
+            }
+        });
 
-        btnViewRoom.setText("View Room");
+        btnViewRoom.setText("Xem Phòng");
         btnViewRoom.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnViewRoomMouseClicked(evt);
             }
         });
+        btnViewRoom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewRoomActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Tìm Trận");
+
+        jButton3.setText("Cá Nhân");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Xếp Hạng");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(lstRoom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lstRoom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnJoinRoom))
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnViewRoom)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 68, Short.MAX_VALUE)
+                                .addComponent(jButton3)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton4)))))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnJoinRoom)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnViewRoom)
-                .addContainerGap(171, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,7 +147,12 @@ public class RoomFrame extends javax.swing.JFrame implements inReceiveMessage{
                     .addComponent(jButton1)
                     .addComponent(btnJoinRoom)
                     .addComponent(btnViewRoom))
-                .addContainerGap(179, Short.MAX_VALUE))
+                .addGap(43, 43, 43)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -114,10 +169,9 @@ public class RoomFrame extends javax.swing.JFrame implements inReceiveMessage{
 
     private void btnJoinRoomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJoinRoomMouseClicked
         // TODO add your handling code here:
-        
+
         try {
-            if (lstRoom.getSelectedIndex()>=0)
-            {
+            if (lstRoom.getSelectedIndex() >= 0) {
                 listenServer.SendMessage(20, lstRoom.getSelectedIndex());
             }
         } catch (Exception e) {
@@ -126,16 +180,73 @@ public class RoomFrame extends javax.swing.JFrame implements inReceiveMessage{
 
     private void btnViewRoomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnViewRoomMouseClicked
         // TODO add your handling code here:
-        
+
         try {
-            if (lstRoom.getSelectedIndex()>=0)
-            {
+            if (lstRoom.getSelectedIndex() >= 0) {
                 listenServer.SendMessage(41, lstRoom.getSelectedIndex());
             }
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnViewRoomMouseClicked
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+            try {
+                listenServer.SendMessage(23, null);
+                java.awt.EventQueue.invokeLater(new Runnable() {
+                    public void run() {
+                        try {
+                            new MyProfile(listenServer).setVisible(true);
+                        } catch (ClassNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void btnViewRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewRoomActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnViewRoomActionPerformed
+
+    private void btnJoinRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJoinRoomActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnJoinRoomActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        // TODO add your handling code here:
+            try {
+                listenServer.SendMessage(23, null);
+                java.awt.EventQueue.invokeLater(new Runnable() {
+                    public void run() {
+                        try {
+                            new MyProfile(listenServer).setVisible(true);
+                        } catch (ClassNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+    }//GEN-LAST:event_jButton3MouseClicked
+
+public void showMyProfile(Users user) throws ClassNotFoundException {
+    if (user != null) {
+        MyProfile profile = new MyProfile(listenServer);
+        profile.setData(user);
+        profile.setVisible(true);
+    }
+}
+
+
+    
     /**
      * @param args the command line arguments
      */
@@ -174,6 +285,9 @@ public class RoomFrame extends javax.swing.JFrame implements inReceiveMessage{
     private javax.swing.JButton btnJoinRoom;
     private javax.swing.JButton btnViewRoom;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private java.awt.List lstRoom;
     // End of variables declaration//GEN-END:variables
 
@@ -192,23 +306,33 @@ public class RoomFrame extends javax.swing.JFrame implements inReceiveMessage{
             }
             case 21: {
                 lstRoom.removeAll();
-                int[] arrRoom = (int[])msg.getObject();
-                for (int i=0; arrRoom!=null && i<arrRoom.length; i++)
-                {
-                    lstRoom.add("Room " + (i+1) + ": " + arrRoom[i]);
+                int[] arrRoom = (int[]) msg.getObject();
+                for (int i = 0; arrRoom != null && i < arrRoom.length; i++) {
+                    lstRoom.add("Room " + (i + 1) + ": " + arrRoom[i]);
                 }
                 lstRoom.select(0);
                 break;
             }
             case 22: { //Room nay da full
                 lstRoom.removeAll();
-                int[] arrRoom = (int[])msg.getObject();
-                for (int i=0; arrRoom!=null && i<arrRoom.length; i++)
-                {
-                    lstRoom.add("Room " + (i+1) + ": " + arrRoom[i]);
+                int[] arrRoom = (int[]) msg.getObject();
+                for (int i = 0; arrRoom != null && i < arrRoom.length; i++) {
+                    lstRoom.add("Room " + (i + 1) + ": " + arrRoom[i]);
                 }
                 lstRoom.select(0);
                 JOptionPane.showMessageDialog(null, "Phòng này đã đầy...", "Thông báo", 1);
+                break;
+            }
+            case 23: { // Mở form MyProfile
+                java.awt.EventQueue.invokeLater(new Runnable() {
+                    public void run() {
+                        try {
+                            new MyProfile(listenServer).setVisible(true);
+                        } catch (ClassNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
                 break;
             }
         }
